@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="app-native-code-plugin" version="0.0.1">
+    <name>app-native-code-plugin</name>
+    <description>App native code</description>
+    <license>Apache 2.0</license>
+    <engines>
+        <engine name="cordova" version=">=5.0.0" />
+    </engines>
+
+    <!-- android -->
+    <platform name="android">
+        <source-file src="src/android/GeofenceTransitionReceiver.java" target-dir="com/myapp" />
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <receiver
+                android:name="com.myapp.GeofenceTransitionReceiver"
+                android:permission="com.geofence.permission.GEOFENCE_TRANSITION_BROADCAST">
+                <intent-filter>
+                    <action android:name="com.geofence.GEOFENCE_TRANSITION" />
+                </intent-filter>
+            </receiver>
+        </config-file>
+
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <hook type="before_prepare" src="hooks/ios/copy_files.js" />
+
+        <source-file src="src/ios/AppUtility.swift"/>
+        <source-file src="src/ios/AppUserNotificationCenterDelegate.swift"/>
+
+        <framework src="UserNotifications.framework" />
+
+    </platform>
+</plugin>

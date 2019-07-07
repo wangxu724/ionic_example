@@ -1,0 +1,19 @@
+{
+  "name": "app-native-code-plugin",
+  "version": "0.0.1",
+  "description": "App native code",
+  "cordova": {
+    "id": "app-native-code-plugin",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "license": "Apache-2.0",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=5.0.0"
+    }
+  ]
+}
