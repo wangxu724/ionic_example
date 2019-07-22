@@ -1,14 +1,15 @@
 {
-  "name": "app-native-code-plugin",
+  "name": "app-native-code",
   "version": "0.0.1",
   "description": "App native code",
   "cordova": {
-    "id": "app-native-code-plugin",
+    "id": "app-native-code",
     "platforms": [
       "android",
       "ios"
     ]
   },
+  "typings": "./typings/app-native-code.d.ts",
   "license": "Apache-2.0",
   "engines": [
     {

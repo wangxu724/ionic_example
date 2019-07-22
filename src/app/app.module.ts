@@ -10,6 +10,8 @@ import { Platform } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+declare const AppNativeCode: AppNativeCode;
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
