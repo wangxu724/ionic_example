@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Geofence } from '@ionic-native/geofence/ngx';
+// import { Geofence } from '@ionic-native/geofence/ngx';
 import { Platform } from '@ionic/angular';
 
 
@@ -11,6 +11,6 @@ import { Platform } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(private platform: Platform, private geofence: Geofence) {
+  constructor(private platform: Platform) {
   }
 }

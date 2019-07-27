@@ -14,7 +14,7 @@ function copyCDVAppDelegate(ctx) {
     const fileName = 'AppDelegate.m';
     const projectRoot = ctx.opts.projectRoot;
     const pluginPath = ctx.opts.plugin.dir;
-    const sourceFilePath = path.join(pluginPath, 'src', 'ios', fileName);
+    const sourceFilePath = path.join(pluginPath, 'hooks', fileName);
     const targetFilePath = path.join(projectRoot, 'platforms', 'ios', 'MyApp', 'Classes', fileName);
 
     fs.copyFileSync(sourceFilePath, targetFilePath);

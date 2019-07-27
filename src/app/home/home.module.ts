@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { TestGeofencePage } from './testGeofence/testGeofence.page';
-import { Geofence } from '@ionic-native/geofence/ngx';
+// import { Geofence } from '@ionic-native/geofence/ngx';
 
 @NgModule({
   imports: [
@@ -18,9 +18,9 @@ import { Geofence } from '@ionic-native/geofence/ngx';
       { path: 'testGeofence', component: TestGeofencePage },
     ])
   ],
-  providers: [
-    Geofence,
-  ],
+  // providers: [
+    // Geofence,
+  // ],
   declarations: [HomePage, TestGeofencePage]
 })
 export class HomePageModule {}

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Geofence } from '@ionic-native/geofence/ngx';
+// import { Geofence } from '@ionic-native/geofence/ngx';
 import { Platform } from '@ionic/angular';
 
-
+declare var GeofencePlugin: GeofencePlugin;
 
 @Component({
   selector: 'test-geofence',
@@ -11,10 +11,10 @@ import { Platform } from '@ionic/angular';
 })
 export class TestGeofencePage {
 
-  constructor(private platform: Platform, private geofence: Geofence) {
+  constructor(private platform: Platform) {
     this.platform.ready()
       .then(() => {
-        this.geofence.initialize().then(
+        GeofencePlugin.initialize().then(
         // resolved promise does not return a value
         () => {
           console.log('Geofence Plugin Ready')
@@ -35,7 +35,7 @@ export class TestGeofencePage {
       transitionType: 3 //see 'Transition Types' below
     }
 
-    this.geofence.addOrUpdate(fence).then(
+    GeofencePlugin.addOrUpdate(fence).then(
        () => console.log('Geofence added'),
        (err) => console.log('Geofence failed to add')
      );

@@ -1,53 +1,95 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="app-native-code" version="0.0.1">
-    <name>app-native-code-plugin</name>
+    <name>app-native-code</name>
     <description>App native code</description>
     <license>Apache 2.0</license>
     <engines>
         <engine name="cordova" version=">=5.0.0" />
     </engines>
 
-    <js-module src="www/appNativeCode.js" name="AppNativeCode">
-        <clobbers target="AppNativeCode" />
+    <js-module src="www/geofence.js" name="GeofencePlugin">
+        <clobbers target="GeofencePlugin" />
     </js-module>
+    <js-module src="www/common.js" name="AppNativeCodeCommon" >
+        <clobbers target="AppNativeCodeCommon" />
+    </js-module>
+
+    <dependency id="cordova-plugin-add-swift-support" version="~2.0.2" />
+    <dependency id="es6-promise-plugin" version="~4.2.2" />
+
     <hook type="before_prepare" src="hooks/copy_files.js" />
 
     <!-- android -->
     <platform name="android">
-        <source-file src="src/android/plugins/AppNativeCodePlugin.java" target-dir="com/myapp/plugins" />
-        <source-file src="src/android/GeofenceTransitionReceiver.java" target-dir="com/myapp" />
+        <source-file src="src/android/plugins/GeofencePlugin.java" target-dir="com/myapp/plugins" />
+        <source-file src="src/android/geofence/BootReceiver.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/GeofenceManager.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/GeofenceModel.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/GeofenceModelStore.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/GeofencingEventIntentReceiver.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/Gson.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/LocalStorage.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/LocalStorageDBHelper.java" target-dir="src/com/myapp/geofence" />
+
+        <framework src="com.google.android.gms:play-services-location:+" />
+        <framework src="com.google.code.gson:gson:2.8.5" />
 
         <config-file target="config.xml" parent="/*">
-            <feature name="AppNativeCodePlugin">
-                <param name="android-package" value="com.myapp.plugins.AppNativeCodePlugin" />
+            <feature name="GeofencePlugin">
+                <param name="android-package" value="com.myapp.plugins.GeofencePlugin" />
             </feature>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <receiver
-                android:name="com.myapp.GeofenceTransitionReceiver"
-                android:permission="com.geofence.permission.GEOFENCE_TRANSITION_BROADCAST">
+            <receiver android:name="com.myapp.geofence.GeofencingEventIntentReceiver" />
+            <receiver android:name="com.myapp.geofence.BootReceiver">
                 <intent-filter>
-                    <action android:name="com.geofence.GEOFENCE_TRANSITION" />
+                    <action android:name="android.intent.action.BOOT_COMPLETED" />
                 </intent-filter>
             </receiver>
         </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        </config-file>
+
     </platform>
 
     <!-- ios -->
     <platform name="ios">
         <source-file src="src/ios/plugins/AppNativeCode-Plugin-Bridging-Header.h"/>
-        <source-file src="src/ios/plugins/AppNativeCodePlugin.swift"/>
+        <source-file src="src/ios/plugins/GeofencePlugin.swift"/>
         <source-file src="src/ios/AppUtility.swift"/>
-        <source-file src="src/ios/AppUserNotificationCenterDelegate.swift"/>
+        <source-file src="src/ios/notification/AppUserNotificationCenterDelegate.swift"/>
+        <source-file src="src/ios/geofence/GeofenceManager.swift"/>
+        <source-file src="src/ios/geofence/GeofenceModelStore.swift"/>
+        <source-file src="src/ios/geofence/SwiftData.swift"/>
+        <source-file src="src/ios/geofence/SwiftyJson.swift"/>
 
-        <config-file target="config.xml" parent="/*">
-            <feature name="AppNativeCodePlugin">
-                <param name="ios-package" value="AppNativeCodePlugin"/>
-            </feature>
+        <framework src="libsqlite3.dylib"/>
+        <framework src="WebKit.framework" weak="true" />
+        <framework src="UserNotifications.framework" />
+
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>remote-notification</string>
+            </array>
         </config-file>
 
-        <framework src="UserNotifications.framework" />
+        <config-file target="config.xml" parent="/*">
+          <feature name="GeofencePlugin">
+            <param name="ios-package" value="GeofencePlugin"/>
+          </feature>
+        </config-file>>
+
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
+            <string>${EXECUTABLE_NAME} Would Like to Use Your Current Location Even In Background.</string>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string>${EXECUTABLE_NAME} Would Like to Use Your Current Location When In Use.</string>
+        </config-file>
+
     </platform>
 </plugin>
