@@ -40,7 +40,7 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [AppUtility cutomizedAppDidLaunchStep];
+    [AppDelegateUtility cutomizedAppDidLaunchStep];
 
     self.viewController = [[MainViewController alloc] init];
     return [super application:application didFinishLaunchingWithOptions:launchOptions];

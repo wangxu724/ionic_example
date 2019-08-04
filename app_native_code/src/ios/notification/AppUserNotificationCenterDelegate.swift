@@ -10,7 +10,11 @@ import UserNotifications
 
 class AppUserNotificationCenterDelegate: NSObject, UNUserNotificationCenterDelegate {
     static let shared = AppUserNotificationCenterDelegate()
-    
+
+    private override init() {
+        super.init()
+    }
+
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {

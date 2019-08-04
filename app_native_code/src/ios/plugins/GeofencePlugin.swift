@@ -72,7 +72,7 @@ func checkRequirements() -> (Bool, [String], [[String:String]]) {
     static let ERROR_PERMISSION_DENIED = "PERMISSION_DENIED"
     static let ERROR_UNKNOWN = "UNKNOWN"
 
-    lazy var geofenceManager = GeofenceManager()
+    lazy var geofenceManager = GeofenceManager.shared
 //    let priority = DispatchQueue.GlobalQueuePriority.default
 
 //    override func pluginInitialize () {
@@ -95,7 +95,7 @@ func checkRequirements() -> (Bool, [String], [[String:String]]) {
     func initialize(command: CDVInvokedUrlCommand) {
         log(message: "Plugin initialization")
 
-        geofenceManager = GeofenceManager()
+        geofenceManager = GeofenceManager.shared
         geofenceManager.registerPermissions()
 
         commandDelegate!.run() {

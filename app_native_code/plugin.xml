@@ -22,25 +22,24 @@
 
     <!-- android -->
     <platform name="android">
+        <!-- Geofence start -->
         <source-file src="src/android/plugins/GeofencePlugin.java" target-dir="com/myapp/plugins" />
         <source-file src="src/android/geofence/BootReceiver.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/GeofenceManager.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/GeofenceModel.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/GeofenceModelStore.java" target-dir="src/com/myapp/geofence" />
+        <source-file src="src/android/geofence/GeofenceTransitionHandler.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/GeofencingEventIntentReceiver.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/Gson.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/LocalStorage.java" target-dir="src/com/myapp/geofence" />
         <source-file src="src/android/geofence/LocalStorageDBHelper.java" target-dir="src/com/myapp/geofence" />
-
         <framework src="com.google.android.gms:play-services-location:+" />
         <framework src="com.google.code.gson:gson:2.8.5" />
-
         <config-file target="config.xml" parent="/*">
             <feature name="GeofencePlugin">
                 <param name="android-package" value="com.myapp.plugins.GeofencePlugin" />
             </feature>
         </config-file>
-
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <receiver android:name="com.myapp.geofence.GeofencingEventIntentReceiver" />
             <receiver android:name="com.myapp.geofence.BootReceiver">
@@ -49,47 +48,45 @@
                 </intent-filter>
             </receiver>
         </config-file>
-
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
         </config-file>
+        <!-- Geofence end -->
 
     </platform>
 
     <!-- ios -->
     <platform name="ios">
-        <source-file src="src/ios/plugins/AppNativeCode-Plugin-Bridging-Header.h"/>
+        <!-- Geofence start -->
+        <source-file src="src/ios/AppNativeCode-Plugin-Bridging-Header.h"/>
         <source-file src="src/ios/plugins/GeofencePlugin.swift"/>
-        <source-file src="src/ios/AppUtility.swift"/>
+        <source-file src="src/ios/AppDelegateUtility.swift"/>
         <source-file src="src/ios/notification/AppUserNotificationCenterDelegate.swift"/>
+        <source-file src="src/ios/geofence/GeofenceHandler.swift"/>
         <source-file src="src/ios/geofence/GeofenceManager.swift"/>
         <source-file src="src/ios/geofence/GeofenceModelStore.swift"/>
         <source-file src="src/ios/geofence/SwiftData.swift"/>
         <source-file src="src/ios/geofence/SwiftyJson.swift"/>
-
         <framework src="libsqlite3.dylib"/>
         <framework src="WebKit.framework" weak="true" />
         <framework src="UserNotifications.framework" />
-
-        <config-file target="*-Info.plist" parent="UIBackgroundModes">
-            <array>
-                <string>remote-notification</string>
-            </array>
-        </config-file>
-
         <config-file target="config.xml" parent="/*">
           <feature name="GeofencePlugin">
             <param name="ios-package" value="GeofencePlugin"/>
           </feature>
         </config-file>>
-
+        <config-file target="*-Info.plist" parent="UIBackgroundModes">
+            <array>
+                <string>remote-notification</string>
+            </array>
+        </config-file>
         <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
             <string>${EXECUTABLE_NAME} Would Like to Use Your Current Location Even In Background.</string>
         </config-file>
-
         <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
             <string>${EXECUTABLE_NAME} Would Like to Use Your Current Location When In Use.</string>
         </config-file>
+        <!-- Geofence end -->
 
     </platform>
 </plugin>

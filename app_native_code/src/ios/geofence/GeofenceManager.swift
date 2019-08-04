@@ -15,11 +15,13 @@ let GEOFENCE_TRANSITION_EVENT = "didGeofenceTransition";
 
 @available(iOS 8.0, *)
 class GeofenceManager : NSObject, CLLocationManagerDelegate {
+    static let shared = GeofenceManager()
+
     let locationManager = CLLocationManager()
     let store = GeofenceModelStore()
     var addOrUpdateCallbacks = [CLCircularRegion:Command]()
 
-    override init() {
+    private override init() {
         log(message: "GeofenceManager init")
         super.init()
         locationManager.delegate = self
@@ -147,7 +149,7 @@ class GeofenceManager : NSObject, CLLocationManagerDelegate {
         if var geofenceModel = store.findById(id: region.identifier) {
             geofenceModel["transitionType"].int = transitionType
 
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: GEOFENCE_TRANSITION_EVENT), object: geofenceModel.rawString(String.Encoding.utf8, options: []))
+            GeofenceHandler.handleGeofenceTransition(geofenceModel: geofenceModel)
         }
     }
 }
